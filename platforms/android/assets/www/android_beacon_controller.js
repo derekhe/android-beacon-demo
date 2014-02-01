@@ -4,6 +4,13 @@ beaconDemo.controller("beaconController", function ($scope) {
     var BEACON_SERVICE = "BeaconService";
 
     $scope.startScan = function () {
+        beaconService("start");
+        registerBeaconScanResultCallback();
+        $scope.beaconsFound = {};
+        $scope.scanStarted = true;
+    };
+
+    function beaconService(action) {
         cordova.exec(
             function (success) {
                 $scope.result = success;
@@ -11,33 +18,33 @@ beaconDemo.controller("beaconController", function ($scope) {
             function (fail) {
                 $scope.result = fail;
             },
-            BEACON_SERVICE, "start", []);
+            BEACON_SERVICE, action, []);
+    }
 
-        cordova.exec(function (ibeacon) {
-            console.log(ibeacon);
-            $scope.result = ibeacon;
+    function registerBeaconScanResultCallback() {
+        cordova.exec(function (beacons) {
+            var beacons = JSON.parse(beacons);
+
+            for(var i=0;i<beacons.length;i++)
+            {
+                $scope.beaconsFound[beacons[i].proximityUuid] = beacons[i];
+            }
+
             $scope.$apply();
         }, function (fail) {
-
         }, BEACON_SERVICE, "setCallback", []);
-    };
+    }
 
     $scope.stopScan = function () {
-        cordova.exec(
-            function (success) {
-                $scope.result = success;
-            },
-            function (fail) {
-                $scope.result = fail;
-            },
-            BEACON_SERVICE, "stop", []);
+        beaconService("stop");
+        $scope.scanStarted = false;
     };
 
-    $scope.result = "not started";
+    $scope.clearScanResult = function() {
+        $scope.beaconsFound = {};
+    }
 
     document.addEventListener('deviceready', function () {
-        $scope.$apply(function () {
-            $scope.startScan();
-        });
+        $scope.startScan();
     });
 });

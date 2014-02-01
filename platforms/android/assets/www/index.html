@@ -25,7 +25,6 @@
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css"/>
 
     <script type="text/javascript" src="js/angular/angular.js"></script>
     <script type="text/javascript" src="js/fastclick.js"></script>
@@ -39,13 +38,23 @@
     <title>Android Beacon Demo</title>
 </head>
 <body ng-app="AndroidBeaconDemo" ng-controller="beaconController">
-<div>
-    <button class="btn-default btn-danger" ng-click="startScan()">Start scan</button>
-    <button class="btn-default btn-danger" ng-click="stopScan()">Stop scan</button>
+<div class="bg-info">
+    <button class="btn-default btn-primary btn-lg" ng-click="startScan()">Start scan</button>
+    <button class="btn-default btn-primary btn-lg" ng-click="stopScan()">Stop scan</button>
+    <button class="btn-default btn-primary btn-lg" ng-click="clearScanResult()">Clear</button>
 </div>
 <div>
-    {{result}}
+    <p class="bg-info" ng-show="scanStarted">Scanning...</p>
 </div>
-
+<table class="table">
+    <tr>
+        <th>UUID</th>
+        <th>RSSI</th>
+    </tr>
+    <tr ng-repeat="beacon in beaconsFound">
+        <td>{{beacon.proximityUuid}}</td>
+        <td>{{beacon.rssi}}</td>
+    </tr>
+</table>
 </body>
 </html>
