@@ -19,17 +19,18 @@
 -->
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
+    <meta charset="utf-8"/>
+    <meta name="format-detection" content="telephone=no"/>
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css" />
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css"/>
 
     <script type="text/javascript" src="js/angular/angular.js"></script>
     <script type="text/javascript" src="js/fastclick.js"></script>
     <script type="text/javascript">
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             FastClick.attach(document.body);
         }, false);
     </script>
@@ -38,8 +39,13 @@
     <title>Android Beacon Demo</title>
 </head>
 <body ng-app="AndroidBeaconDemo" ng-controller="beaconController">
-result = {{result}}
-<button class="btn-default" ng-click="startScan()">Start scan</button>
-<button class="btn-default" ng-click="stopScan()">Stop scan</button>
+<div>
+    <button class="btn-default btn-danger" ng-click="startScan()">Start scan</button>
+    <button class="btn-default btn-danger" ng-click="stopScan()">Stop scan</button>
+</div>
+<div>
+    {{result}}
+</div>
+
 </body>
 </html>

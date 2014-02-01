@@ -2,15 +2,14 @@ package com.april1985.android_beacon_demo;
 
 import android.os.RemoteException;
 import android.util.Log;
+import com.google.gson.Gson;
 import com.radiusnetworks.ibeacon.IBeacon;
 import com.radiusnetworks.ibeacon.RangeNotifier;
 import com.radiusnetworks.ibeacon.Region;
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Collection;
 
@@ -20,6 +19,7 @@ public class BeaconService extends CordovaPlugin implements RangeNotifier {
 
     public static final Region REGION = new Region("REGION", null, null, null);
     public static final String TAG = "BeaconService";
+    private CallbackContext rangingCallbackContext = null;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -36,6 +36,10 @@ public class BeaconService extends CordovaPlugin implements RangeNotifier {
 
         if (action.equals("stop")) {
             return stopScan(callbackContext);
+        }
+
+        if (action.equals("setCallback")) {
+            rangingCallbackContext = callbackContext;
         }
 
         return true;
@@ -66,8 +70,8 @@ public class BeaconService extends CordovaPlugin implements RangeNotifier {
 
     @Override
     public void didRangeBeaconsInRegion(Collection<IBeacon> iBeacons, Region region) {
-        for (IBeacon iBeacon : iBeacons) {
-            Log.d(TAG, iBeacon.getProximityUuid());
-        }
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, new Gson().toJson(iBeacons));
+        pluginResult.setKeepCallback(true);
+        rangingCallbackContext.sendPluginResult(pluginResult);
     }
 }
