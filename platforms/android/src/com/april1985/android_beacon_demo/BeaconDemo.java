@@ -20,19 +20,52 @@
 package com.april1985.android_beacon_demo;
 
 import android.os.Bundle;
-import org.apache.cordova.*;
-
+import android.os.RemoteException;
 import com.radiusnetworks.ibeacon.IBeaconConsumer;
 import com.radiusnetworks.ibeacon.IBeaconManager;
+import com.radiusnetworks.ibeacon.Region;
+import org.apache.cordova.Config;
+import org.apache.cordova.CordovaActivity;
 
-public class AndroidBeaconDemo extends CordovaActivity
-{	
+public class BeaconDemo extends CordovaActivity implements IBeaconConsumer {
+    public static IBeaconManager getBeaconManager() {
+        return iBeaconManager;
+    }
+
+    private static IBeaconManager iBeaconManager;
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.init();
         super.loadUrl(Config.getStartUrl());
+
+        iBeaconManager = IBeaconManager.getInstanceForApplication(this);
+        iBeaconManager.bind(this);
+    }
+
+
+    @Override
+    public void onIBeaconServiceConnect() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        iBeaconManager.unBind(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (iBeaconManager.isBound(this)) iBeaconManager.setBackgroundMode(this, true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (iBeaconManager.isBound(this)) iBeaconManager.setBackgroundMode(this, false);
     }
 }
 

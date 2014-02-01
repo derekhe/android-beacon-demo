@@ -1,13 +1,25 @@
 angular.module("AndroidBeaconDemo", []).controller("beaconController", function ($scope) {
-    $scope.searchBeacon = function()
-    {
-        cordova.exec(function(success){
-            $scope.result = success;
-        }, function(fail)
-        {
-            $scope.result = "failed";
-        }, "BeaconService", "", []);
-    }
+    $scope.startScan = function () {
+        cordova.exec(
+            function (success) {
+                $scope.result = success;
+            },
+            function (fail) {
+                $scope.result = fail;
+            },
+            "BeaconService", "start", []);
+    };
 
-    $scope.result = "not success";
+    $scope.stopScan = function () {
+        cordova.exec(
+            function (success) {
+                $scope.result = success;
+            },
+            function (fail) {
+                $scope.result = fail;
+            },
+            "BeaconService", "stop", []);
+    };
+
+    $scope.result = "not started";
 });
