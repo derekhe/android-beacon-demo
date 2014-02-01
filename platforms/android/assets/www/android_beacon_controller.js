@@ -1,4 +1,6 @@
-angular.module("AndroidBeaconDemo", []).controller("beaconController", function ($scope) {
+var beaconDemo = angular.module("AndroidBeaconDemo", []);
+
+beaconDemo.controller("beaconController", function ($scope) {
     var BEACON_SERVICE = "BeaconService";
 
     $scope.startScan = function () {
@@ -32,4 +34,10 @@ angular.module("AndroidBeaconDemo", []).controller("beaconController", function 
     };
 
     $scope.result = "not started";
+
+    document.addEventListener('deviceready', function () {
+        $scope.$apply(function () {
+            $scope.startScan();
+        });
+    });
 });
