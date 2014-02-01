@@ -3,10 +3,11 @@ var beaconDemo = angular.module("AndroidBeaconDemo", []);
 beaconDemo.controller("beaconController", function ($scope) {
     var BEACON_SERVICE = "BeaconService";
 
+    $scope.beaconsFound = {};
+
     $scope.startScan = function () {
         beaconService("start");
         registerBeaconScanResultCallback();
-        $scope.beaconsFound = {};
         $scope.scanStarted = true;
     };
 
@@ -25,9 +26,12 @@ beaconDemo.controller("beaconController", function ($scope) {
         cordova.exec(function (beacons) {
             var beacons = JSON.parse(beacons);
 
-            for(var i=0;i<beacons.length;i++)
-            {
-                $scope.beaconsFound[beacons[i].proximityUuid] = beacons[i];
+            $scope.beaconsVisiable = {};
+
+            for (var i = 0; i < beacons.length; i++) {
+                var proximityUuid = beacons[i].proximityUuid;
+                $scope.beaconsFound[proximityUuid] = beacons[i];
+                $scope.beaconsVisiable[proximityUuid] = beacons[i];
             }
 
             $scope.$apply();
@@ -35,12 +39,17 @@ beaconDemo.controller("beaconController", function ($scope) {
         }, BEACON_SERVICE, "setCallback", []);
     }
 
+    $scope.isVisible = function(beacon)
+    {
+        return _.has($scope.beaconsVisiable, beacon.proximityUuid);
+    }
+
     $scope.stopScan = function () {
         beaconService("stop");
         $scope.scanStarted = false;
     };
 
-    $scope.clearScanResult = function() {
+    $scope.clearScanResult = function () {
         $scope.beaconsFound = {};
     }
 
