@@ -5,6 +5,9 @@
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
+    <feature name="BeaconService">
+        <param name="android-package" value="com.april1985.android_beacon_demo.BeaconService"/>
+    </feature>
     <name>android-beacon-demo</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

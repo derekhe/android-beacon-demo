@@ -22,16 +22,17 @@ package com.april1985.android_beacon_demo;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-public class androidbeacondemo extends CordovaActivity 
-{
+import com.radiusnetworks.ibeacon.IBeaconConsumer;
+import com.radiusnetworks.ibeacon.IBeaconManager;
+
+public class AndroidBeaconDemo extends CordovaActivity
+{	
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         super.init();
-        // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());
-        //super.loadUrl("file:///android_asset/www/index.html")
     }
 }
 
