@@ -53,6 +53,16 @@ controllers.controller("searchController", function ($scope) {
         $scope.beaconsFound = {};
     }
 
+    $scope.getNearestBeacon = function () {
+        return _.min($scope.beaconsVisiable, function (beacon) {
+            return -1 * parseFloat(beacon.rssi)
+        });
+    }
+
+    $scope.isNearest = function (beacon) {
+        return $scope.getNearestBeacon() == beacon;
+    }
+
     document.addEventListener('deviceready', function () {
         $scope.startScan();
     });
