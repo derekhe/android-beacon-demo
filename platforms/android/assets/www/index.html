@@ -17,7 +17,7 @@
     specific language governing permissions and limitations
     under the License.
 -->
-<html>
+<html ng-app="androidBeaconDemo">
 <head>
     <meta charset="utf-8"/>
     <meta name="format-detection" content="telephone=no"/>
@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css"/>
 
     <script type="text/javascript" src="js/angular/angular.js"></script>
+    <script type="text/javascript" src="js/angular/angular-route.js"></script>
     <script type="text/javascript" src="js/fastclick.js"></script>
     <script type="text/javascript">
         window.addEventListener('load', function () {
@@ -36,40 +37,13 @@
     </script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/underscore.js"></script>
+    <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="android_beacon_controller.js"></script>
     <title>Android Beacon Demo</title>
 </head>
-<body ng-app="AndroidBeaconDemo" ng-controller="beaconController">
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <a class="navbar-brand">Beacon Demo</a>
+<body>
+<div ng-view></div>
 
-            <div class="pull-right">
-                <button class="btn btn-default navbar-btn navbar-right" ng-hide="scanStarted" ng-click="startScan()">
-                    Scan
-                </button>
-                <button class="btn btn-default navbar-btn navbar-right" ng-show="scanStarted" ng-click="stopScan()">
-                    Stop
-                </button>
-                <button class="btn btn-default navbar-btn navbar-right" ng-click="clearScanResult()">Clean</button>
-            </div>
-        </div>
-
-    </div>
-</nav>
-<p>Beacon founds</p>
-<table class="table">
-    <tr>
-        <th>UUID</th>
-        <th>RSSI</th>
-    </tr>
-    <tr ng-repeat="beacon in beaconsFound" ng-class="{success: isVisible(beacon), active: !isVisible(beacon)}">
-        <td>{{beacon.proximityUuid}}</td>
-        <td>{{beacon.rssi}}</td>
-    </tr>
-</table>
 </body>
 </html>

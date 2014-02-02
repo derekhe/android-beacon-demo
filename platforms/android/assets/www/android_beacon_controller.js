@@ -1,6 +1,6 @@
-var beaconDemo = angular.module("AndroidBeaconDemo", []);
+var controllers = angular.module("appControllers", []);
 
-beaconDemo.controller("beaconController", function ($scope) {
+controllers.controller("searchController", function ($scope) {
     var BEACON_SERVICE = "BeaconService";
 
     $scope.beaconsFound = {};
